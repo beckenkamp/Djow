@@ -1,0 +1,42 @@
+{% extends 'template.html' %}
+
+{% block body %}
+
+<div class="btn-group pull-right">
+  <a class="btn btn-primary" href="#">Action</a>
+  <a class="btn btn-danger" href="#">Action</a>
+  <a class="btn btn-success" href="#">Action</a>
+</div>
+
+<h2>Cash Flow</h2>
+
+<table class="table table-striped">
+  <thead>
+    <th>Category</th>
+    <th>Description</th>
+    <th>Installments</th>
+    <th>Planned Amonut</th>
+    <th>Payed Amonut</th>
+    <th>Due Date</th>
+    <th>Payed Date</th>
+  </thead>
+  <tbody>
+    {% for item in cash_flow %}
+      <tr>
+        <td>Category</td>
+        <td>Description</td>
+        <td>Installments</td>
+        <td>Planned Amonut</td>
+        <td>Payed Amonut</td>
+        <td>Due Date</td>
+        <td>Payed Date</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="7">Nothing found here</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  
+{% endblock %}
