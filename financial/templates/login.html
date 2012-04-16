@@ -39,7 +39,7 @@
     </style>
     
     <h1>Djow Financial</h1>
-    <p>;)</p>
+    <p>&nbsp;</p>
     
     {% if form.errors %}
     <p>Your username and password didn't match. Please try again.</p>
@@ -54,10 +54,10 @@
                         {% csrf_token %}
                         <fieldset>
                             <div class="clearfix">
-                                {{ form.username }}<!-- <input type="text" name="username" placeholder="Username"> -->
+                                <input id="id_username" type="text" name="username" maxlength="30" placeholder="Username">
                             </div>
                             <div class="clearfix">
-                                {{ form.password }}<!-- <input type="password" name="password" placeholder="Password"> -->
+                                <input type="password" name="password" placeholder="Password">
                             </div>
                             <button class="btn primary" type="submit">Sign in</button>
                         </fieldset>
