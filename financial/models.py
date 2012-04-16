@@ -17,9 +17,10 @@ class CashFlow(models.Model):
     installments = models.IntegerField(blank=True, null=True)
     amount_planned = models.FloatField()
     amount_payed = models.FloatField(blank=True, null=True)
-    due_date = models.DateTimeField()
-    payed_date = models.DateTimeField(blank=True, null=True)
-    insert_date = models.DateTimeField()
+    date_due = models.DateTimeField()
+    date_payed = models.DateTimeField(blank=True, null=True)
+    date_inserted = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return self.description

@@ -23,13 +23,13 @@
   <tbody>
     {% for item in cash_flow %}
       <tr>
-        <td>Category</td>
-        <td>Description</td>
-        <td>Installments</td>
-        <td>Planned Amonut</td>
-        <td>Payed Amonut</td>
-        <td>Due Date</td>
-        <td>Payed Date</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.installments }}</td>
+        <td>{{ item.amount_planned }}</td>
+        <td>{{ item.amount_payed }}</td>
+        <td>{{ item.due_date }}</td>
+        <td>{{ item.payed_date }}</td>
       </tr>
       {% empty %}
       <tr>
