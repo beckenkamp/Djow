@@ -43,12 +43,14 @@
           <a class="brand" href="#">Djow Financial</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li class="active"><a href="/">Home</a></li>
             </ul>
-            <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
-          </div><!--/.nav-collapse -->
+          {% if user.is_authenticated %}
+            <p class="navbar-text pull-right">Logged in as <strong>{{ user.username }}</strong> [ <a href="/logout/">Logout</a> ]</p>
+          {% else %}
+            <p class="navbar-text pull-right">Hello, new user!</p>
+          {% endif %}
+          </div> <!--/.nav-collapse -->
         </div>
       </div>
     </div>
@@ -56,11 +58,8 @@
 
     <div class="container">
 
-      <h1>Djow Financial</h1>
-      <p>Personal financial control system.<br> Control your cash flow and be a richest person, man.</p>
-  
       {% block body %}
-        <!-- Login Form http://www.countableset.com/blog/2012/01/29/twitter-bootstrap-login-form/ --> 
+      
       {% endblock %}
       
     </div> <!-- /container -->
