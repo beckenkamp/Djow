@@ -28,12 +28,12 @@
         <td>{{ item.installments }}</td>
         <td>{{ item.amount_planned }}</td>
         <td>{{ item.amount_payed }}</td>
-        <td>{{ item.due_date }}</td>
-        <td>{{ item.payed_date }}</td>
+        <td>{{ item.date_due }}</td>
+        <td>{{ item.date_payed }}</td>
       </tr>
       {% empty %}
       <tr>
-        <td colspan="7">Nothing found here</td>
+        <td colspan="7">Nothing found here!</td>
       </tr>
     {% endfor %}
   </tbody>

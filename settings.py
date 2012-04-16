@@ -1,7 +1,7 @@
 # Django settings for djow project.
 
 import os
-ROOTDIR = os.path.realpath(os.path.dirname(__file__))
+ROOTDIR = os.path.realpath(os.path.dirname(__file__)) + '/'
 STATIC_HOST = 'http://127.0.0.1/djow'
 STATIC_DIR = '/var/www/html/djow/'
 
@@ -70,7 +70,7 @@ STATIC_URL = STATIC_HOST + '/static/'
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+ADMIN_MEDIA_PREFIX = STATIC_HOST + '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -115,7 +115,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    #'django.contrib.staticfiles',
+    'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
