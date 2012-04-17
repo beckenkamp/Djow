@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 
 
 class Category(models.Model):
@@ -24,3 +25,13 @@ class CashFlow(models.Model):
 
     def __unicode__(self):
         return self.description
+    
+
+class CategoryForm(ModelForm):
+    class Meta:
+        model = Category
+
+
+class CashFlowForm(ModelForm):
+    class Meta:
+        model = CashFlow

@@ -18,6 +18,8 @@ urlpatterns = patterns('',
     
     url(r'^login/', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
     url(r'^logout/', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}),
+    
+    url(r'^insert', 'financial.views.cashflow_edit'),
     url(r'^', 'financial.views.index'),
     
 )

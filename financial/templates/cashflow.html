@@ -1,14 +1,12 @@
 {% extends 'template.html' %}
+{% load url from future %}
 
 {% block body %}
   
-<h1>Djow Financial</h1>
-<p>Personal financial control system.<br> Control your cash flow and be a richest person, man.</p>
-
 <div class="btn-group pull-right">
-  <a class="btn btn-primary" href="#">Action</a>
-  <a class="btn btn-danger" href="#">Action</a>
-  <a class="btn btn-success" href="#">Action</a>
+  <a class="btn btn-primary" href="{% url 'financial.views.cashflow_edit' %}">Insert</a>
+  <!-- <a class="btn btn-danger" href="#">Action</a>
+  <a class="btn btn-success" href="#">Action</a> -->
 </div>
 
 <h2>Cash Flow</h2>

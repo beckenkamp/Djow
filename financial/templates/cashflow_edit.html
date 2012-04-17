@@ -1,0 +1,58 @@
+{% extends 'template.html' %}
+{% load url from future %}
+
+{% block body %}
+
+<div class="btn-group pull-right">
+  <a class="btn btn-danger" href="{% url 'financial.views.index' %}">Back</a>
+</div>
+
+<h2>Insert</h2>
+<p>Insert data to this system, bro.</p>
+
+{% if form.errors %}
+    <p>Error. Please try again.</p>
+{% endif %}
+
+<form action="{% url 'financial.views.cashflow_edit' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="user" id="id_user" value="{{ user.id }}" />
+
+    <div>
+        {{ form.category.label_tag }}
+        {{ form.category }}
+    </div>
+    
+    <div>
+        {{ form.description.label_tag }}
+        {{ form.description }}
+    </div>
+    
+    <div>
+        {{ form.installments.label_tag }}
+        {{ form.installments }}
+    </div>
+    
+    <div>
+        {{ form.amount_planned.label_tag }}
+        {{ form.amount_planned }}
+    </div>
+    
+    <div>
+        {{ form.amount_payed.label_tag }}
+        {{ form.amount_payed }}
+    </div>
+    
+    <div>
+        {{ form.date_due.label_tag }}
+        {{ form.date_due }}
+    </div>
+    
+    <div>
+        {{ form.date_payed.label_tag }}
+        {{ form.date_payed }}
+    </div>
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}
