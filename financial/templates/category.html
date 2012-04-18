@@ -4,33 +4,23 @@
 {% block body %}
   
 <div class="btn-group pull-right">
-  <a class="btn btn-primary" href="{% url 'financial.views.cashflow_edit' %}">Add New</a>
+  <a class="btn btn-primary" href="{% url 'financial.views.category_edit' %}">Add New</a>
   <!-- <a class="btn btn-danger" href="#">Action</a>
   <a class="btn btn-success" href="#">Action</a> -->
 </div>
 
-<h2>Cash Flow</h2>
+<h2>Category</h2>
 
 <table class="table table-striped">
   <thead>
-    <th>Category</th>
+    <th>Parent</th>
     <th>Description</th>
-    <th>Installments</th>
-    <th>Planned Amonut</th>
-    <th>Payed Amonut</th>
-    <th>Due Date</th>
-    <th>Payed Date</th>
   </thead>
   <tbody>
-    {% for item in cash_flow %}
+    {% for item in category %}
       <tr>
-        <td>{{ item.category }}</td>
+        <td>{{ item.parent }}</td>
         <td>{{ item.description }}</td>
-        <td>{{ item.installments }}</td>
-        <td>{{ item.amount_planned }}</td>
-        <td>{{ item.amount_payed }}</td>
-        <td>{{ item.date_due }}</td>
-        <td>{{ item.date_payed }}</td>
       </tr>
       {% empty %}
       <tr>

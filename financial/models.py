@@ -4,6 +4,7 @@ from django.forms import ModelForm
 
 
 class Category(models.Model):
+    user = models.ForeignKey(User)
     parent = models.ForeignKey('self', blank=True, null=True)
     description = models.CharField(max_length=200)
 

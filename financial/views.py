@@ -13,9 +13,18 @@ def index(request):
         'cash_flow' : cash_flow,
         'user' : user,
     })
+    
+@login_required(login_url='/login/')
+def category(request):
+    category = Category.objects.all()
+    user = request.user
+    return render_to_response('category.html', {
+        'category' : category,
+        'user' : user,
+    })
 
 @login_required(login_url='/login/')    
-def cashflow_edit(request):
+def cashflow_edit(request):    
     user = request.user
     
     if request.method == 'POST':
@@ -30,3 +39,20 @@ def cashflow_edit(request):
     c.update({'user' : user,})
     c.update(csrf(request))
     return render_to_response('cashflow_edit.html', c)
+    
+@login_required(login_url='/login/')    
+def category_edit(request):
+    user = request.user
+    
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save();
+            return HttpResponseRedirect('/category')
+    else:
+        form = CategoryForm()
+    
+    c = {'form': form}
+    c.update({'user' : user,})
+    c.update(csrf(request))
+    return render_to_response('category_edit.html', c)

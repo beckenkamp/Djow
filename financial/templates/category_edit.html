@@ -1,0 +1,34 @@
+{% extends 'template.html' %}
+{% load url from future %}
+
+{% block body %}
+
+<div class="btn-group pull-right">
+  <a class="btn btn-danger" href="{% url 'financial.views.category' %}">Back</a>
+</div>
+
+<h2>Add New Category</h2>
+<p>Insert data to this system, bro.</p>
+
+{% if form.errors %}
+    <p>Error. Please try again.</p>
+{% endif %}
+
+<form action="{% url 'financial.views.category_edit' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="user" id="id_user" value="{{ user.id }}" />
+
+    <div>
+        {{ form.parent.label_tag }}
+        {{ form.parent }}
+    </div>
+    
+    <div>
+        {{ form.description.label_tag }}
+        {{ form.description }}
+    </div>
+    
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}

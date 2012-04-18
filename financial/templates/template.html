@@ -43,7 +43,10 @@
           <a class="brand" href="#">Djow Financial</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="/">Home</a></li>
+              {% if user.is_authenticated %}
+                <li {% if cash_flow != NULL %}class="active"{% endif %}><a href="/">Cash Flow</a></li>
+                <li {% if category != NULL %}class="active"{% endif %}><a href="/category">Category</a></li>
+              {% endif %}
             </ul>
           {% if user.is_authenticated %}
             <p class="navbar-text pull-right">Logged in as <strong>{{ user.username }}</strong> [ <a href="/logout/">Logout</a> ]</p>
