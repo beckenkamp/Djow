@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.forms import ModelForm
-
+from django import forms
 
 class Category(models.Model):
     user = models.ForeignKey(User)
@@ -15,8 +14,8 @@ class Category(models.Model):
 class CashFlow(models.Model):
     user = models.ForeignKey(User)
     category = models.ForeignKey(Category)
+    parent = models.ForeignKey('self', blank=True, null=True)
     description = models.CharField(max_length=200)
-    installments = models.IntegerField(blank=True, null=True)
     amount_planned = models.FloatField()
     amount_payed = models.FloatField(blank=True, null=True)
     date_due = models.DateField()
@@ -28,11 +27,13 @@ class CashFlow(models.Model):
         return self.description
     
 
-class CategoryForm(ModelForm):
+class CategoryForm(forms.ModelForm):   
     class Meta:
         model = Category
 
 
-class CashFlowForm(ModelForm):
+class CashFlowForm(forms.ModelForm):
+    installments = forms.IntegerField(required=False)
+    
     class Meta:
         model = CashFlow
