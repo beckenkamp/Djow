@@ -42,7 +42,11 @@
     <p>Personal financial control system.<br> Control your cash flow and be a richest person, man.</p>
     
     {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
+      <div class="alert alert-error">
+        <a class="close" data-dismiss="alert">×</a>
+        <h4 class="alert-heading">Error!</h4>
+        Your username and password didn't match. Please try again.
+      </div>
     {% endif %}
     
     <div class="content">
