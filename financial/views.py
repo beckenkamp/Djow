@@ -8,8 +8,8 @@ from datetime import *
 
 @login_required(login_url='/login/')
 def index(request):
-    cash_flow = CashFlow.objects.all()
     user = request.user
+    cash_flow = CashFlow.objects.filter(user_id=user.id)
     return render_to_response('cashflow.html', {
         'cash_flow' : cash_flow,
         'user' : user,
@@ -17,8 +17,8 @@ def index(request):
     
 @login_required(login_url='/login/')
 def category(request):
-    category = Category.objects.all()
     user = request.user
+    category = Category.objects.filter(user_id=user.id)
     return render_to_response('category.html', {
         'category' : category,
         'user' : user,
@@ -29,7 +29,7 @@ def cashflow_edit(request):
     user = request.user
     
     if request.method == 'POST':
-        form = CashFlowForm(request.POST)
+        form = CashFlowForm(user, request.POST)
         if form.is_valid():
             user = form.cleaned_data['user']
             category = form.cleaned_data['category']
@@ -70,7 +70,7 @@ def cashflow_edit(request):
                     
             return HttpResponseRedirect('/')
     else:
-        form = CashFlowForm()
+        form = CashFlowForm(user)
     
     c = {'form': form}
     c.update({'user' : user,})
@@ -82,12 +82,12 @@ def category_edit(request):
     user = request.user
     
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
+        form = CategoryForm(user, request.POST)
         if form.is_valid():
             form.save();
             return HttpResponseRedirect('/category')
     else:
-        form = CategoryForm()
+        form = CategoryForm(user)
     
     c = {'form': form}
     c.update({'user' : user,})

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django import forms
+from django.db.models import Q
 
 class Category(models.Model):
     user = models.ForeignKey(User)
@@ -27,13 +28,23 @@ class CashFlow(models.Model):
         return self.description
     
 
-class CategoryForm(forms.ModelForm):   
+class CategoryForm(forms.ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        super(CategoryForm, self).__init__(*args, **kwargs)
+        self.fields['parent'].queryset = Category.objects.filter(user_id=user)
+
+    
     class Meta:
         model = Category
 
 
 class CashFlowForm(forms.ModelForm):
     installments = forms.IntegerField(required=False)
+    
+    def __init__(self, user, *args, **kwargs):
+        super(CashFlowForm, self).__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.filter(user_id=user)
+
     
     class Meta:
         model = CashFlow
