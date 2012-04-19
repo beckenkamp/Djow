@@ -1,7 +1,7 @@
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
-from models import Category, CashFlow, CategoryForm, CashFlowForm
+from models import Category, CashFlow, CategoryForm, CashFlowForm, DjowDateHandler
 from django.contrib.auth.decorators import login_required
 from django.forms.models import modelformset_factory
 from datetime import *
@@ -9,10 +9,36 @@ from datetime import *
 @login_required(login_url='/login/')
 def index(request):
     user = request.user
-    cash_flow = CashFlow.objects.filter(user_id=user.id)
+    cf = CashFlow()
+        
+    if 'year' in request.GET:
+        year = request.GET['year']
+    else:
+        year = datetime.now().year
+    
+    if 'month' in request.GET:
+        month = request.GET['month']
+    else:
+        month = datetime.now().month
+    
+    cash_flow = CashFlow.objects.filter(user_id=user.id, date_due__month=month, date_due__year=year)
+    amount_planned_sum = CashFlow.get_amount_planned_sum_by_month(cf, month, year)
+    amount_payed_sum = CashFlow.get_amount_payed_sum_by_month(cf, month, year)
+    
+    month = int(month)
+    year = int(year)
+    month_now = datetime(year, month, 1)
+    
+    date_handler = DjowDateHandler.month_year_iterator(month_now)
+    
     return render_to_response('cashflow.html', {
         'cash_flow' : cash_flow,
         'user' : user,
+        'amount_planned_sum' : amount_planned_sum,
+        'amount_payed_sum' : amount_payed_sum,
+        'month_now' : date_handler['month_now'],
+        'month_last' : date_handler['month_last'],
+        'month_next' : date_handler['month_next'],
     })
     
 @login_required(login_url='/login/')
@@ -56,7 +82,11 @@ def cashflow_edit(request):
             if installments > 0 :
                 for num in range(1, installments):
                     installments_string = ' (' + str(num+1) + '/' + str(installments) + ')'
-                    increment = timedelta(days=30*num)
+                    
+                    if num == 1:
+                        new_date_due = date_due
+                        
+                    new_date_due = DjowDateHandler.month_increment(new_date_due)
                     
                     cf = CashFlow()
                     cf.user = user
@@ -65,7 +95,7 @@ def cashflow_edit(request):
                     cf.description = description + installments_string
                     cf.installments = installments
                     cf.amount_planned = amount_planned
-                    cf.date_due = date_due + increment
+                    cf.date_due = new_date_due
                     cf.save()
                     
             return HttpResponseRedirect('/')

@@ -3,13 +3,19 @@
 
 {% block body %}
   
+<h2>Cash Flow</h2>
+<p>Planned to <strong>{{ month_now|date:"F" }}</strong></p>
+  
+<div class="btn-group">
+  <a class="btn btn-mini btn-danger" href="{% url 'financial.views.index' %}?month={{ month_last|date:"n" }}&year={{ month_last|date:"Y" }}">Previous</a>
+  <a class="btn btn-mini btn-danger" href="{% url 'financial.views.index' %}?month={{ month_next|date:"n" }}&year={{ month_next|date:"Y" }}">Next</a>
+</div>
+  
 <div class="btn-group pull-right">
-  <a class="btn btn-primary" href="{% url 'financial.views.cashflow_edit' %}">Add New</a>
+  <a class="btn btn-action" href="{% url 'financial.views.cashflow_edit' %}">Add New</a>
   <!-- <a class="btn btn-danger" href="#">Action</a>
   <a class="btn btn-success" href="#">Action</a> -->
 </div>
-
-<h2>Cash Flow</h2>
 
 <table class="table table-striped">
   <thead>
@@ -36,6 +42,17 @@
       </tr>
     {% endfor %}
   </tbody>
+  <tfooter>
+    <td>Total</td>
+    <td></td>
+    <td>{{ amount_planned_sum.amount_planned__sum }}</td>
+    <td>{{ amount_payed_sum.amount_payed__sum }}</td>
+    <td></td>
+    <td></td>
+  </tfooter>
 </table>
+
+
+
   
 {% endblock %}
