@@ -4,7 +4,7 @@
 {% block body %}
 
 <div class="btn-group pull-right">
-  <a class="btn btn-primary" href="{% url 'financial.views.category_edit' %}">Add Category</a>
+  <a class="btn btn-action" href="{% url 'financial.views.category_edit' %}">Add Category</a>
   <a class="btn btn-danger" href="{% url 'financial.views.index' %}">Back</a>
 </div>
 
@@ -15,12 +15,14 @@
   <div class="alert alert-error">
     <a class="close" data-dismiss="alert">×</a>
     <h4 class="alert-heading">Error!</h4>
-    Please try again.
+    {{ form.errors }}
   </div>
 {% endif %}
 
 <form action="{% url 'financial.views.cashflow_edit' %}" method="post">
     {% csrf_token %}
+    
+    <input type="hidden" name="id" id="id_id" value="{{ id }}" />
     <input type="hidden" name="user" id="id_user" value="{{ user.id }}" />
 
     <div>

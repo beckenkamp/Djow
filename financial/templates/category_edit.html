@@ -14,12 +14,14 @@
   <div class="alert alert-error">
     <a class="close" data-dismiss="alert">×</a>
     <h4 class="alert-heading">Error!</h4>
-    Please try again.
+    {{ form.errors }}
   </div>
 {% endif %}
 
 <form action="{% url 'financial.views.category_edit' %}" method="post">
     {% csrf_token %}
+    
+    <input type="hidden" name="id" id="id_id" value="{{ id }}" />
     <input type="hidden" name="user" id="id_user" value="{{ user.id }}" />
 
     <div>

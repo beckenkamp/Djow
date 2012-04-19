@@ -53,10 +53,12 @@ def category(request):
 @login_required(login_url='/login/')    
 def cashflow_edit(request):    
     user = request.user
+    id = 0
     
     if request.method == 'POST':
         form = CashFlowForm(user, request.POST)
         if form.is_valid():
+            id = form.cleaned_data['id']
             user = form.cleaned_data['user']
             category = form.cleaned_data['category']
             description = form.cleaned_data['description']
@@ -68,8 +70,14 @@ def cashflow_edit(request):
  
             if installments > 0:
                 installments_string = ' (1/' + str(installments) + ')'
+            else:
+                installments_string = ''
  
-            c = CashFlow()
+            if id > 0:
+                c = CashFlow.objects.get(pk=id)
+            else:
+                c = CashFlow()
+                
             c.user = user
             c.category = category            
             c.description = description + installments_string            
@@ -100,9 +108,16 @@ def cashflow_edit(request):
                     
             return HttpResponseRedirect('/')
     else:
-        form = CashFlowForm(user)
+        if 'id' in request.GET:
+            id = request.GET['id']
+            cash_flow = CashFlow.objects.get(pk=id)
+        else:
+            cash_flow = CashFlow()
+            
+        form = CashFlowForm(user, instance=cash_flow)
     
-    c = {'form': form}
+    c = {'id' : id}
+    c.update({'form' : form})
     c.update({'user' : user,})
     c.update(csrf(request))
     return render_to_response('cashflow_edit.html', c)
@@ -110,16 +125,59 @@ def cashflow_edit(request):
 @login_required(login_url='/login/')    
 def category_edit(request):
     user = request.user
+    id = 0
     
     if request.method == 'POST':
         form = CategoryForm(user, request.POST)
         if form.is_valid():
-            form.save();
+            id = form.cleaned_data['id']
+            user = form.cleaned_data['user']
+            parent = form.cleaned_data['parent']
+            description = form.cleaned_data['description']
+            
+            if id > 0:
+                c = Category.objects.get(pk=id)
+            else:
+                c = Category()
+            
+            c.user = user
+            c.parent = parent
+            c.description = description
+            c.save()
+            
             return HttpResponseRedirect('/category')
     else:
-        form = CategoryForm(user)
+        if 'id' in request.GET:
+            id = request.GET['id']
+            category = Category.objects.get(pk=id)
+        else:
+            category = Category()
+        
+        form = CategoryForm(user, instance=category)
     
-    c = {'form': form}
+    c = {'id' : id}
+    c.update({'form' : form})
     c.update({'user' : user,})
     c.update(csrf(request))
     return render_to_response('category_edit.html', c)
+    
+@login_required(login_url='/login/')
+def cashflow_remove(request):
+    if request.method == 'GET':
+        if 'id' in request.GET:
+            id = request.GET['id']
+            user = request.user
+            CashFlow.objects.filter(parent=id, user_id=user).delete()
+            CashFlow.objects.get(pk=id, user_id=user).delete()
+            return HttpResponseRedirect('/')
+            
+@login_required(login_url='/login/')
+def category_remove(request):
+    if request.method == 'GET':
+        if 'id' in request.GET:
+            id = request.GET['id']
+            user = request.user
+            category = Category.objects.get(pk=id, user_id=user)
+            CashFlow.objects.filter(category=category, user_id=user).delete()
+            category.delete()
+            return HttpResponseRedirect('/category')

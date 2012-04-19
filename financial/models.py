@@ -36,6 +36,8 @@ class CashFlow(models.Model):
     
 
 class CategoryForm(forms.ModelForm):
+    id = forms.IntegerField(required=False)
+    
     def __init__(self, user, *args, **kwargs):
         super(CategoryForm, self).__init__(*args, **kwargs)
         self.fields['parent'].queryset = Category.objects.filter(user_id=user)
@@ -46,6 +48,7 @@ class CategoryForm(forms.ModelForm):
 
 
 class CashFlowForm(forms.ModelForm):
+    id = forms.IntegerField(required=False)
     installments = forms.IntegerField(required=False)
     
     def __init__(self, user, *args, **kwargs):
@@ -55,7 +58,8 @@ class CashFlowForm(forms.ModelForm):
     
     class Meta:
         model = CashFlow
-        
+
+
 class DjowDateHandler():
     @staticmethod
     def month_year_iterator(month_now=datetime.now()):

@@ -22,6 +22,9 @@ urlpatterns = patterns('',
     url(r'^insert', 'financial.views.cashflow_edit'),
     url(r'^category/insert', 'financial.views.category_edit'),
     
+    url(r'^remove', 'financial.views.cashflow_remove'),
+    url(r'^category/remove', 'financial.views.category_remove'),
+    
     url(r'^category', 'financial.views.category'),
     url(r'^', 'financial.views.index'),
     

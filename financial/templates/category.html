@@ -4,9 +4,7 @@
 {% block body %}
   
 <div class="btn-group pull-right">
-  <a class="btn btn-primary" href="{% url 'financial.views.category_edit' %}">Add New</a>
-  <!-- <a class="btn btn-danger" href="#">Action</a>
-  <a class="btn btn-success" href="#">Action</a> -->
+  <a class="btn btn-action" href="{% url 'financial.views.category_edit' %}">Add New</a>
 </div>
 
 <h2>Category</h2>
@@ -15,12 +13,15 @@
   <thead>
     <th>Parent</th>
     <th>Description</th>
+    <th></th>
   </thead>
   <tbody>
     {% for item in category %}
       <tr>
         <td>{{ item.parent }}</td>
         <td>{{ item.description }}</td>
+        <td><a class="btn btn-mini btn-warning djow-cashflow-edit" href="{% url 'financial.views.category_edit' %}?id={{ item.id }}">Edit</a>
+            <a class="btn btn-mini btn-danger djow-cashflow-remove" href="{% url 'financial.views.category_remove' %}?id={{ item.id }}">X</a></td>
       </tr>
       {% empty %}
       <tr>
@@ -30,4 +31,21 @@
   </tbody>
 </table>
   
+{% endblock %}
+
+{% block scripts %}
+  
+  <script type="text/javascript">
+    $('.djow-cashflow-remove').click(function(){
+      if (confirm('Are you sure you want to remove this data and ALL the data linked to it?'))
+      {
+        window.location = $(this).attr('href');
+      }
+      else
+      {
+        return false;
+      }
+    });
+  </script>
+
 {% endblock %}

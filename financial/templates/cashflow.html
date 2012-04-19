@@ -3,19 +3,26 @@
 
 {% block body %}
   
-<h2>Cash Flow</h2>
-<p>Planned to <strong>{{ month_now|date:"F" }}</strong></p>
-  
-<div class="btn-group">
-  <a class="btn btn-mini btn-danger" href="{% url 'financial.views.index' %}?month={{ month_last|date:"n" }}&year={{ month_last|date:"Y" }}">Previous</a>
-  <a class="btn btn-mini btn-danger" href="{% url 'financial.views.index' %}?month={{ month_next|date:"n" }}&year={{ month_next|date:"Y" }}">Next</a>
-</div>
-  
 <div class="btn-group pull-right">
   <a class="btn btn-action" href="{% url 'financial.views.cashflow_edit' %}">Add New</a>
-  <!-- <a class="btn btn-danger" href="#">Action</a>
-  <a class="btn btn-success" href="#">Action</a> -->
 </div>
+
+<h2>Cash Flow</h2>
+<p>Monthly...</p>
+  
+<div class="pager">
+  <ul>
+    <li>
+      <a href="{% url 'financial.views.index' %}?month={{ month_last|date:"n" }}&year={{ month_last|date:"Y" }}">&larr;</a>
+    </li>
+    <li class="active">
+      <a href="#">{{ month_now|date:"F" }}</a>
+    </li>
+    <li>
+      <a href="{% url 'financial.views.index' %}?month={{ month_next|date:"n" }}&year={{ month_next|date:"Y" }}">&rarr;</a>
+    </li>
+  </ul>
+</div>  
 
 <table class="table table-striped">
   <thead>
@@ -25,6 +32,7 @@
     <th>Payed Amonut</th>
     <th>Due Date</th>
     <th>Payed Date</th>
+    <th></th>
   </thead>
   <tbody>
     {% for item in cash_flow %}
@@ -35,6 +43,8 @@
         <td>{{ item.amount_payed }}</td>
         <td>{{ item.date_due }}</td>
         <td>{{ item.date_payed }}</td>
+        <td><a class="btn btn-mini btn-warning djow-cashflow-edit" href="{% url 'financial.views.cashflow_edit' %}?id={{ item.id }}">Edit</a>
+            <a class="btn btn-mini btn-danger djow-cashflow-remove" href="{% url 'financial.views.cashflow_remove' %}?id={{ item.id }}">X</a></td>
       </tr>
       {% empty %}
       <tr>
@@ -42,17 +52,32 @@
       </tr>
     {% endfor %}
   </tbody>
-  <tfooter>
+  <tfoot>
     <td>Total</td>
     <td></td>
     <td>{{ amount_planned_sum.amount_planned__sum }}</td>
     <td>{{ amount_payed_sum.amount_payed__sum }}</td>
     <td></td>
     <td></td>
-  </tfooter>
+    <td></td>
+  </tfoot>
 </table>
-
-
-
   
+{% endblock %}
+
+{% block scripts %}
+  
+  <script type="text/javascript">
+    $('.djow-cashflow-remove').click(function(){
+      if (confirm('Are you sure you want to remove this data and ALL the data linked to it?'))
+      {
+        window.location = $(this).attr('href');
+      }
+      else
+      {
+        return false;
+      }
+    });
+  </script>
+
 {% endblock %}
