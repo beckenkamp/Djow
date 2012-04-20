@@ -87,7 +87,7 @@ def cashflow_edit(request):
             c.date_payed = date_payed
             c.save()
             
-            if installments > 0 :
+            if installments > 0 and id <= 0:
                 for num in range(1, installments):
                     installments_string = ' (' + str(num+1) + '/' + str(installments) + ')'
                     

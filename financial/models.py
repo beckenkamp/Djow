@@ -83,9 +83,9 @@ class DjowDateHandler():
             year_minus = year
         
         return {'month_now' : month_now,
-                    'month_next' : datetime(year_plus, month_plus, 1),
-                    'month_last' : datetime(year_minus, month_minus, 1),
-                   }
+                'month_next' : datetime(year_plus, month_plus, 1),
+                'month_last' : datetime(year_minus, month_minus, 1),
+               }
     
     @staticmethod
     def month_increment(date):
