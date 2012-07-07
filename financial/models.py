@@ -54,7 +54,7 @@ class CashFlowForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(CashFlowForm, self).__init__(*args, **kwargs)
         self.fields['category'].queryset = Category.objects.filter(user_id=user)
-
+        self.fields['installments'].widget.attrs['data-inputmask'] = "99"
     
     class Meta:
         model = CashFlow

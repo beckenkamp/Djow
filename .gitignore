@@ -3,3 +3,4 @@
 *.sqlite
 .komodotools/*
 *.komodoproject
+local_settings.py

@@ -114,7 +114,7 @@ def cashflow_edit(request):
         else:
             cash_flow = CashFlow()
             
-        form = CashFlowForm(user, instance=cash_flow)
+        form = CashFlowForm(user, instance=cash_flow, initial={'date_due': datetime.now(), 'date_payed': datetime.now()})
     
     c = {'id' : id}
     c.update({'form' : form})

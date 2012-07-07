@@ -1,11 +1,8 @@
 # Django settings for djow project.
 
-import os
-ROOTDIR = os.path.realpath(os.path.dirname(__file__)) + '/'
-STATIC_HOST = 'http://127.0.0.1/djow'
-STATIC_DIR = '/var/www/html/djow/'
+from local_settings import * #define the local settings
 
-DEBUG = True
+DEBUG = DEBUG_BOOLEAN
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -16,12 +13,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': ROOTDIR + 'sqlite.db', # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.' + DB_ENGINE, # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': DB_NAME,                      # Or path to database file if using sqlite3.
+        'USER': DB_USER,                      # Not used with sqlite3.
+        'PASSWORD': DB_PASSWORD,                  # Not used with sqlite3.
+        'HOST': DB_HOST,                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': DB_PORT,                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -50,27 +47,27 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = UPLOADEDFILES_DIR
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = UPLOADEDFILES_HOST
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = STATIC_DIR + 'static'
+STATIC_ROOT = STATIC_DIR
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = STATIC_HOST + '/static/'
+STATIC_URL = STATIC_HOST
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = STATIC_HOST + '/static/admin/'
+ADMIN_MEDIA_PREFIX = STATIC_HOST + 'admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -106,7 +103,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'djow.urls'
 
 TEMPLATE_DIRS = (
-    ROOTDIR + 'templates',
+    TEMPLATES_DIR
 )
 
 INSTALLED_APPS = (
